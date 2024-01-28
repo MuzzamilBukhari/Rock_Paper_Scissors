@@ -33,7 +33,8 @@ const updateResult = (score, playerChoice, computerChoice) => {
 }
 
 // Play Game
-const playGame = (playerChoice, computerChoice) => {
+const playGame = (playerChoice) => {
+    const computerChoice = getComputerChoice();
     if (playerChoice === computerChoice){
         updateResult(0, playerChoice, computerChoice);
     }
@@ -64,8 +65,7 @@ const playGame = (playerChoice, computerChoice) => {
 boxes.forEach((box) => {
     box.onclick = () => {
         let playerChoice = box.innerText
-        let computerChoice = getComputerChoice();
-        playGame (playerChoice, computerChoice);
+        playGame (playerChoice);
     }
 })
 
