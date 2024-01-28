@@ -1,34 +1,71 @@
+// Access Divs
 const boxes = document.querySelectorAll(".box");
+const resultDiv = document.getElementById("result")
+const scoresDiv = document.querySelectorAll(".score");
 
-// const random = Math.floor((Math.random() * 3))
-// console.log(random)
-// const playGame = () => {
-//     if ()
-// }
-const arr = ['Rock', 'Paper', 'Scissors'];
+// Get COmputer Choice Randomly
 const getComputerChoice = () => {
     const random = Math.floor((Math.random() * 3))
-    return arr[random];
+    const choices = ['Rock', 'Paper', 'Scissors'];
+    return choices[random];
 }
+
+// Update the results
+let playerScore = 0;
+let computerScore = 0;
+const updateResult = (score, playerChoice, computerChoice) => {
+    if (score == 0) {
+        resultDiv.innerText = "Its a Draw";
+        resultDiv.style.backgroundColor = "Grey";
+    }
+    else if (score == 1){
+        resultDiv.innerText = `You Win. ${playerChoice} beats ${computerChoice}`;
+        resultDiv.style.backgroundColor = "Green";
+        playerScore++;
+        scoresDiv[0].innerText = playerScore;
+    }
+    else {
+        resultDiv.innerText = `You Lost. ${computerChoice} beats ${playerChoice}`;
+        resultDiv.style.backgroundColor = "Red";
+        computerScore++;
+        scoresDiv[1].innerText = computerScore;
+    }
+}
+
+// Play Game
+const playGame = (playerChoice, computerChoice) => {
+    if (playerChoice === computerChoice){
+        updateResult(0, playerChoice, computerChoice);
+    }
+    else if (playerChoice === "Rock" && computerChoice === "Paper"){
+        updateResult(-1, playerChoice, computerChoice);
+    }
+    else if (playerChoice === "Rock" && computerChoice === "Scissors"){
+        updateResult(1, playerChoice, computerChoice);
+    }
+    else if (playerChoice === "Paper" && computerChoice === "Rock"){
+        updateResult(1, playerChoice, computerChoice);
+    }
+    else if (playerChoice === "Paper" && computerChoice === "Scissors"){
+        updateResult(-1, playerChoice, computerChoice);
+    }
+    else if (playerChoice === "Scissors" && computerChoice === "Rock"){
+        updateResult(-1, playerChoice, computerChoice);
+    }
+    else if (playerChoice === "Scissors" && computerChoice === "Paper"){
+        updateResult(1, playerChoice, computerChoice);
+    } 
+    else {
+        console.log("Invalid");
+    }
+}
+
+
 boxes.forEach((box) => {
     box.onclick = () => {
-        if (box.innerText === getComputerChoice()){
-            console.log("Its a draw");
-        } else if (box.innerText === "Rock" && getComputerChoice() === "Paper"){
-            console.log("Computer Wins");
-        } else if (box.innerText === "Rock" && getComputerChoice() === "Scissors"){
-            console.log("You wins");
-        } else if (box.innerText === "Scissors" && getComputerChoice() === "Rock"){
-            console.log("Computer wins");
-        } else if (box.innerText === "Scissors" && getComputerChoice() === "Paper"){
-            console.log("You wins");
-        } else if (box.innerText === "Paper" && getComputerChoice() === "Rock"){
-            console.log("You wins");
-        } else if (box.innerText === "Paper" && getComputerChoice() === "Scissors"){
-            console.log("Computer wins");
-        } else {
-            console.log("Invalid");
-        }
+        let playerChoice = box.innerText
+        let computerChoice = getComputerChoice();
+        playGame (playerChoice, computerChoice);
     }
 })
 
